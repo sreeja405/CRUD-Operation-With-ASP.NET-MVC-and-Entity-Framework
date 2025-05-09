@@ -1,0 +1,73 @@
+Orders:
+1. Basic Authentication(Taking from web.config)
+		Username: User@Name
+		Password: pass@word1
+2.Web Methods:
+	a.Get Branch List
+		Method:Get
+		URL: http://localhost/OrdersAPI/api/orders/BranchList
+	b.Get Inventory List
+		Method:Get
+		URL: http://localhost/OrdersAPI/api/orders/InventoryList
+	c. Get Order List(Only Orders with inProgress,New Status):once a Request is called then all Orders with New Status will change to InProgress Status
+		Method: Get
+		URL: http://localhost/OrdersAPI/api/orders/OrderList
+			
+	d.Get Complete Order List(Only completed Orders) 
+		Method:Get
+		URL: http://localhost/OrdersAPI/api/orders/CompleteOrderList
+	e.Get Cancel Order List(Only cancelled Orders)
+		Method:Get
+		URL: http://localhost/OrdersAPI/api/orders/CancelOrderList
+			
+	e.Get Single Branch with Branch Code 
+		Method:Get
+		URL:http://localhost/OrdersAPI/api/orders/BranchList/AP0001
+	f.Get Single Inventory with Inventory Code
+		Method:Get
+		URL: http://localhost/OrdersAPI/api/orders/InventoryList/I001
+	g.Get Single Order Details(Only Orders with New,inprogress,Completed Status):: once a Request is called then if the Order with New Status will change to InProgress Status
+		Method:Get
+		URL: http://localhost/OrdersAPI/api/orders/CompleteOrderList/ORD001
+	h.Create Order
+		Method: Post
+		URL: http://localhost/OrdersAPI/api/orders/CreateOrder
+		Body:
+			{
+				"OrderCode": "OC008",
+				"CustomerName": "Customer001",
+				"Mobile": "0501231238",
+				"ItemCode": "I002",
+				"ItemName": "Test", 
+				"Quantity": 2
+			}	
+	i. Update Order	
+		Method: Post
+		URL: http://localhost/OrdersAPI/api/orders/UpdateOrder/ORD8
+		Body:
+			{
+				"OrderCode": "OC008",
+				"CustomerName": "Customer001",
+				"Mobile": "0501231238",
+				"ItemCode": "I002",
+				"ItemName": "Test", 
+				"Quantity": 2
+			}	
+	j. Cancel Order	
+		Method: Post
+		URL: http://localhost/OrdersAPI/api/orders/CancelOrder/ORD8
+	k. Complete Order
+		Method: Post
+		URL: 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
