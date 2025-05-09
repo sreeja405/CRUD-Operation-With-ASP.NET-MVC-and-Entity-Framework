@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OrdersAPIPOCModelStoreContainer" CdmEntityContainer="OrdersAPIPOCEntities">
+    <FunctionImportMapping FunctionImportName="SpInsOrder" FunctionName="OrdersAPIPOCModel.Store.SpInsOrder" />
+    <FunctionImportMapping FunctionImportName="SpGetOrder" FunctionName="OrdersAPIPOCModel.Store.SpGetOrder">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OrdersAPIPOCModel.SpGetOrder_Result">
+          <ScalarProperty Name="OrderUno" ColumnName="OrderUno" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="TblexeOrders">
+      <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblexeOrder">
+        <MappingFragment StoreEntitySet="TblexeOrder">
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="EnteredOn" ColumnName="EnteredOn" />
+          <ScalarProperty Name="StatusUno" ColumnName="StatusUno" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OrderUno" ColumnName="OrderUno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblMstBranches">
+      <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstBranch">
+        <MappingFragment StoreEntitySet="TblMstBranch">
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+          <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+          <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+          <ScalarProperty Name="BranchUno" ColumnName="BranchUno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblMstCustomers">
+      <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstCustomer">
+        <MappingFragment StoreEntitySet="TblMstCustomer">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblMstCustomerAuthorisations">
+      <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstCustomerAuthorisation">
+        <MappingFragment StoreEntitySet="TblMstCustomerAuthorisation">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+          <ScalarProperty Name="CustomerAuthUno" ColumnName="CustomerAuthUno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblMstInventories">
+      <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstInventory">
+        <MappingFragment StoreEntitySet="TblMstInventory">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="InventoryName" ColumnName="InventoryName" />
+          <ScalarProperty Name="InventoryCode" ColumnName="InventoryCode" />
+          <ScalarProperty Name="InventoryUno" ColumnName="InventoryUno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblMstNUIStatus">
+      <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstNUIStatu">
+        <MappingFragment StoreEntitySet="TblMstNUIStatus">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusUno" ColumnName="StatusUno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

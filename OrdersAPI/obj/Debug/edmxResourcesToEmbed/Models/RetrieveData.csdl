@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OrdersAPIPOCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="OrdersAPIPOCEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="SpInsOrder">
+      <Parameter Name="OrderUno" Mode="In" Type="Int32" />
+      <Parameter Name="OrderCode" Mode="In" Type="String" />
+      <Parameter Name="CustomerName" Mode="In" Type="String" />
+      <Parameter Name="Mobile" Mode="In" Type="String" />
+      <Parameter Name="ItemCode" Mode="In" Type="String" />
+      <Parameter Name="ItemName" Mode="In" Type="String" />
+      <Parameter Name="Quantity" Mode="In" Type="Int32" />
+      <Parameter Name="OutParameter" Mode="InOut" Type="Int32" />
+      <Parameter Name="OutMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpGetOrder" ReturnType="Collection(OrdersAPIPOCModel.SpGetOrder_Result)">
+      <Parameter Name="OrderId" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="TblexeOrders" EntityType="OrdersAPIPOCModel.TblexeOrder" />
+    <EntitySet Name="TblMstBranches" EntityType="OrdersAPIPOCModel.TblMstBranch" />
+    <EntitySet Name="TblMstCustomers" EntityType="OrdersAPIPOCModel.TblMstCustomer" />
+    <EntitySet Name="TblMstCustomerAuthorisations" EntityType="OrdersAPIPOCModel.TblMstCustomerAuthorisation" />
+    <EntitySet Name="TblMstInventories" EntityType="OrdersAPIPOCModel.TblMstInventory" />
+    <EntitySet Name="TblMstNUIStatus" EntityType="OrdersAPIPOCModel.TblMstNUIStatu" />
+    <AssociationSet Name="fk_CustomerUno" Association="OrdersAPIPOCModel.fk_CustomerUno">
+      <End Role="TblMstCustomer" EntitySet="TblMstCustomers" />
+      <End Role="TblexeOrder" EntitySet="TblexeOrders" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="SpGetOrder_Result">
+    <Property Type="Int32" Name="OrderUno" Nullable="false" />
+    <Property Type="String" Name="OrderID" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="OrderCode" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="Quantity" Nullable="true" />
+    <Property Type="Int32" Name="CustomerUno" Nullable="false" />
+    <Property Type="String" Name="Mobile" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="ItemCode" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="ItemName" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="StatusName" Nullable="false" MaxLength="250" />
+  </ComplexType>
+  <EntityType Name="TblexeOrder">
+    <Key>
+      <PropertyRef Name="OrderUno" />
+    </Key>
+    <Property Name="OrderUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="OrderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="CustomerUno" Type="Int32" Nullable="false" />
+    <Property Name="Mobile" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StatusUno" Type="Int32" Nullable="false" />
+    <Property Name="EnteredOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ItemCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ItemName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TblMstCustomer" Relationship="OrdersAPIPOCModel.fk_CustomerUno" FromRole="TblexeOrder" ToRole="TblMstCustomer" />
+  </EntityType>
+  <EntityType Name="TblMstBranch">
+    <Key>
+      <PropertyRef Name="BranchUno" />
+    </Key>
+    <Property Name="BranchUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BrandName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BranchName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BranchCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TblMstCustomer">
+    <Key>
+      <PropertyRef Name="CustomerUno" />
+    </Key>
+    <Property Name="CustomerUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="TblexeOrders" Relationship="OrdersAPIPOCModel.fk_CustomerUno" FromRole="TblMstCustomer" ToRole="TblexeOrder" />
+  </EntityType>
+  <EntityType Name="TblMstCustomerAuthorisation">
+    <Key>
+      <PropertyRef Name="CustomerAuthUno" />
+    </Key>
+    <Property Name="CustomerAuthUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerUno" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblMstInventory">
+    <Key>
+      <PropertyRef Name="InventoryUno" />
+    </Key>
+    <Property Name="InventoryUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InventoryCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="InventoryName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblMstNUIStatu">
+    <Key>
+      <PropertyRef Name="StatusUno" />
+    </Key>
+    <Property Name="StatusUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_CustomerUno">
+    <End Type="OrdersAPIPOCModel.TblMstCustomer" Role="TblMstCustomer" Multiplicity="1" />
+    <End Type="OrdersAPIPOCModel.TblexeOrder" Role="TblexeOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblMstCustomer">
+        <PropertyRef Name="CustomerUno" />
+      </Principal>
+      <Dependent Role="TblexeOrder">
+        <PropertyRef Name="CustomerUno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

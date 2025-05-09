@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OrdersAPIPOCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TblexeOrder">
+    <Key>
+      <PropertyRef Name="OrderUno" />
+    </Key>
+    <Property Name="OrderUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderID" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="OrderCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="CustomerUno" Type="int" Nullable="false" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StatusUno" Type="int" Nullable="false" />
+    <Property Name="EnteredOn" Type="datetime" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="500" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="TblMstBranch">
+    <Key>
+      <PropertyRef Name="BranchUno" />
+    </Key>
+    <Property Name="BranchUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BrandName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="BranchName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="BranchCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Location" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="TblMstCustomer">
+    <Key>
+      <PropertyRef Name="CustomerUno" />
+    </Key>
+    <Property Name="CustomerUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblMstCustomerAuthorisation">
+    <Key>
+      <PropertyRef Name="CustomerAuthUno" />
+    </Key>
+    <Property Name="CustomerAuthUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerUno" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblMstInventory">
+    <Key>
+      <PropertyRef Name="InventoryUno" />
+    </Key>
+    <Property Name="InventoryUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InventoryCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="InventoryName" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblMstNUIStatus">
+    <Key>
+      <PropertyRef Name="StatusUno" />
+    </Key>
+    <Property Name="StatusUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_CustomerUno">
+    <End Role="TblMstCustomer" Type="Self.TblMstCustomer" Multiplicity="1" />
+    <End Role="TblexeOrder" Type="Self.TblexeOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblMstCustomer">
+        <PropertyRef Name="CustomerUno" />
+      </Principal>
+      <Dependent Role="TblexeOrder">
+        <PropertyRef Name="CustomerUno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SpGetOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OrderId" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SpInsOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OrderUno" Type="int" Mode="In" />
+    <Parameter Name="OrderCode" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Mobile" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemCode" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Quantity" Type="int" Mode="In" />
+    <Parameter Name="OutParameter" Type="int" Mode="InOut" />
+    <Parameter Name="OutMessage" Type="nvarchar(max)" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="OrdersAPIPOCModelStoreContainer">
+    <EntitySet Name="TblexeOrder" EntityType="Self.TblexeOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblMstBranch" EntityType="Self.TblMstBranch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblMstCustomer" EntityType="Self.TblMstCustomer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblMstCustomerAuthorisation" EntityType="Self.TblMstCustomerAuthorisation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblMstInventory" EntityType="Self.TblMstInventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblMstNUIStatus" EntityType="Self.TblMstNUIStatus" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_CustomerUno" Association="Self.fk_CustomerUno">
+      <End Role="TblMstCustomer" EntitySet="TblMstCustomer" />
+      <End Role="TblexeOrder" EntitySet="TblexeOrder" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

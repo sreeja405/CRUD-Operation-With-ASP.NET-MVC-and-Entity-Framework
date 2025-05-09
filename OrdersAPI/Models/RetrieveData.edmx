@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OrdersAPIPOCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TblexeOrder">
+          <Key>
+            <PropertyRef Name="OrderUno" />
+          </Key>
+          <Property Name="OrderUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="OrderCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="CustomerUno" Type="int" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="StatusUno" Type="int" Nullable="false" />
+          <Property Name="EnteredOn" Type="datetime" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="500" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="TblMstBranch">
+          <Key>
+            <PropertyRef Name="BranchUno" />
+          </Key>
+          <Property Name="BranchUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BranchCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TblMstCustomer">
+          <Key>
+            <PropertyRef Name="CustomerUno" />
+          </Key>
+          <Property Name="CustomerUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblMstCustomerAuthorisation">
+          <Key>
+            <PropertyRef Name="CustomerAuthUno" />
+          </Key>
+          <Property Name="CustomerAuthUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerUno" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblMstInventory">
+          <Key>
+            <PropertyRef Name="InventoryUno" />
+          </Key>
+          <Property Name="InventoryUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InventoryCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="InventoryName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblMstNUIStatus">
+          <Key>
+            <PropertyRef Name="StatusUno" />
+          </Key>
+          <Property Name="StatusUno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_CustomerUno">
+          <End Role="TblMstCustomer" Type="Self.TblMstCustomer" Multiplicity="1" />
+          <End Role="TblexeOrder" Type="Self.TblexeOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblMstCustomer">
+              <PropertyRef Name="CustomerUno" />
+            </Principal>
+            <Dependent Role="TblexeOrder">
+              <PropertyRef Name="CustomerUno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SpGetOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SpInsOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderUno" Type="int" Mode="In" />
+          <Parameter Name="OrderCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="CustomerName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Mobile" Type="nvarchar" Mode="In" />
+          <Parameter Name="ItemCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="ItemName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Quantity" Type="int" Mode="In" />
+          <Parameter Name="OutParameter" Type="int" Mode="InOut" />
+          <Parameter Name="OutMessage" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="OrdersAPIPOCModelStoreContainer">
+          <EntitySet Name="TblexeOrder" EntityType="Self.TblexeOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblMstBranch" EntityType="Self.TblMstBranch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblMstCustomer" EntityType="Self.TblMstCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblMstCustomerAuthorisation" EntityType="Self.TblMstCustomerAuthorisation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblMstInventory" EntityType="Self.TblMstInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblMstNUIStatus" EntityType="Self.TblMstNUIStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_CustomerUno" Association="Self.fk_CustomerUno">
+            <End Role="TblMstCustomer" EntitySet="TblMstCustomer" />
+            <End Role="TblexeOrder" EntitySet="TblexeOrder" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OrdersAPIPOCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OrdersAPIPOCEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="SpInsOrder">
+            <Parameter Name="OrderUno" Mode="In" Type="Int32" />
+            <Parameter Name="OrderCode" Mode="In" Type="String" />
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="Mobile" Mode="In" Type="String" />
+            <Parameter Name="ItemCode" Mode="In" Type="String" />
+            <Parameter Name="ItemName" Mode="In" Type="String" />
+            <Parameter Name="Quantity" Mode="In" Type="Int32" />
+            <Parameter Name="OutParameter" Mode="InOut" Type="Int32" />
+            <Parameter Name="OutMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SpGetOrder" ReturnType="Collection(OrdersAPIPOCModel.SpGetOrder_Result)">
+          <Parameter Name="OrderId" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TblexeOrders" EntityType="OrdersAPIPOCModel.TblexeOrder" />
+          <EntitySet Name="TblMstBranches" EntityType="OrdersAPIPOCModel.TblMstBranch" />
+          <EntitySet Name="TblMstCustomers" EntityType="OrdersAPIPOCModel.TblMstCustomer" />
+          <EntitySet Name="TblMstCustomerAuthorisations" EntityType="OrdersAPIPOCModel.TblMstCustomerAuthorisation" />
+          <EntitySet Name="TblMstInventories" EntityType="OrdersAPIPOCModel.TblMstInventory" />
+          <EntitySet Name="TblMstNUIStatus" EntityType="OrdersAPIPOCModel.TblMstNUIStatu" />
+          <AssociationSet Name="fk_CustomerUno" Association="OrdersAPIPOCModel.fk_CustomerUno">
+            <End Role="TblMstCustomer" EntitySet="TblMstCustomers" />
+            <End Role="TblexeOrder" EntitySet="TblexeOrders" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="SpGetOrder_Result">
+          <Property Type="Int32" Name="OrderUno" Nullable="false" />
+          <Property Type="String" Name="OrderID" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="OrderCode" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="CustomerUno" Nullable="false" />
+          <Property Type="String" Name="Mobile" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ItemCode" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="250" />
+        </ComplexType>
+        <EntityType Name="TblexeOrder">
+          <Key>
+            <PropertyRef Name="OrderUno" />
+          </Key>
+          <Property Name="OrderUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OrderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="CustomerUno" Type="Int32" Nullable="false" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StatusUno" Type="Int32" Nullable="false" />
+          <Property Name="EnteredOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TblMstCustomer" Relationship="OrdersAPIPOCModel.fk_CustomerUno" FromRole="TblexeOrder" ToRole="TblMstCustomer" />
+        </EntityType>
+        <EntityType Name="TblMstBranch">
+          <Key>
+            <PropertyRef Name="BranchUno" />
+          </Key>
+          <Property Name="BranchUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BranchName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BranchCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TblMstCustomer">
+          <Key>
+            <PropertyRef Name="CustomerUno" />
+          </Key>
+          <Property Name="CustomerUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TblexeOrders" Relationship="OrdersAPIPOCModel.fk_CustomerUno" FromRole="TblMstCustomer" ToRole="TblexeOrder" />
+        </EntityType>
+        <EntityType Name="TblMstCustomerAuthorisation">
+          <Key>
+            <PropertyRef Name="CustomerAuthUno" />
+          </Key>
+          <Property Name="CustomerAuthUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerUno" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblMstInventory">
+          <Key>
+            <PropertyRef Name="InventoryUno" />
+          </Key>
+          <Property Name="InventoryUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InventoryCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InventoryName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblMstNUIStatu">
+          <Key>
+            <PropertyRef Name="StatusUno" />
+          </Key>
+          <Property Name="StatusUno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_CustomerUno">
+          <End Type="OrdersAPIPOCModel.TblMstCustomer" Role="TblMstCustomer" Multiplicity="1" />
+          <End Type="OrdersAPIPOCModel.TblexeOrder" Role="TblexeOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblMstCustomer">
+              <PropertyRef Name="CustomerUno" />
+            </Principal>
+            <Dependent Role="TblexeOrder">
+              <PropertyRef Name="CustomerUno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OrdersAPIPOCModelStoreContainer" CdmEntityContainer="OrdersAPIPOCEntities">
+          <FunctionImportMapping FunctionImportName="SpInsOrder" FunctionName="OrdersAPIPOCModel.Store.SpInsOrder" />
+          <FunctionImportMapping FunctionImportName="SpGetOrder" FunctionName="OrdersAPIPOCModel.Store.SpGetOrder">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrdersAPIPOCModel.SpGetOrder_Result">
+                <ScalarProperty Name="OrderUno" ColumnName="OrderUno" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TblexeOrders">
+            <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblexeOrder">
+              <MappingFragment StoreEntitySet="TblexeOrder">
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="EnteredOn" ColumnName="EnteredOn" />
+                <ScalarProperty Name="StatusUno" ColumnName="StatusUno" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderUno" ColumnName="OrderUno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblMstBranches">
+            <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstBranch">
+              <MappingFragment StoreEntitySet="TblMstBranch">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="BranchUno" ColumnName="BranchUno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblMstCustomers">
+            <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstCustomer">
+              <MappingFragment StoreEntitySet="TblMstCustomer">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblMstCustomerAuthorisations">
+            <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstCustomerAuthorisation">
+              <MappingFragment StoreEntitySet="TblMstCustomerAuthorisation">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="CustomerUno" ColumnName="CustomerUno" />
+                <ScalarProperty Name="CustomerAuthUno" ColumnName="CustomerAuthUno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblMstInventories">
+            <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstInventory">
+              <MappingFragment StoreEntitySet="TblMstInventory">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="InventoryName" ColumnName="InventoryName" />
+                <ScalarProperty Name="InventoryCode" ColumnName="InventoryCode" />
+                <ScalarProperty Name="InventoryUno" ColumnName="InventoryUno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblMstNUIStatus">
+            <EntityTypeMapping TypeName="OrdersAPIPOCModel.TblMstNUIStatu">
+              <MappingFragment StoreEntitySet="TblMstNUIStatus">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusUno" ColumnName="StatusUno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

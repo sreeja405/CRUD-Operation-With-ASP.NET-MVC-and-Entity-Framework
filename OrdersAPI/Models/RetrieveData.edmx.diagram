@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="127fde2c82f24882bc9b4abd85854c6f" Name="Diagram1">
+        <EntityTypeShape EntityType="OrdersAPIPOCModel.TblexeOrder" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="OrdersAPIPOCModel.TblMstBranch" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="OrdersAPIPOCModel.TblMstCustomer" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="OrdersAPIPOCModel.TblMstCustomerAuthorisation" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="OrdersAPIPOCModel.TblMstInventory" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="OrdersAPIPOCModel.TblMstNUIStatu" Width="1.5" PointX="5.75" PointY="3.75" />
+        <AssociationConnector Association="OrdersAPIPOCModel.fk_CustomerUno" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
